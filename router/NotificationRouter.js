@@ -20,7 +20,7 @@ NotifyRouter.post('/create-notification', auth, async (req, res) => {
             return res.send({ success: false, message: "All fields are required" })
         }
 
-        const citizen = await SignUp_models.findOne({ id: id, role: 'citizen' })
+        const citizen = await SignUp_models.findOne({ id: citizenId, role: 'citizen' })
         if (!citizen) {
             return res.send({ success: false, message: "Invalid citizen email" })
         }
@@ -48,15 +48,15 @@ NotifyRouter.post('/create-notification', auth, async (req, res) => {
     }
 })
 
-NotifyRouter.get('/notification', auth, async (req, res) => {
+NotifyRouter.get('/notification', async (req, res) => {
     try {
-        const notify = Notify_model.find({}).populate('citizen')
+        const notify = await Notify_model.find({}).populate('citizen')
 
         if (!notify) {
             return res.send({ success: false, message: "Notification Can't get" })
         }
 
-        return res.send({ success: true, message })
+        return res.send({ success: true, notification: notify })
 
     }
     catch (err) {

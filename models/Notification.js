@@ -9,6 +9,6 @@ const notificationSchema = mongoose.Schema({
     status: { type: String, enum: ['ongoing', 'completed'] }
 }, { timestamps: true })
 
-const notifyModel = mongoose.model('Notification', notificationSchema)
+const notifyModel = mongoose.model('CitizenNotification', notificationSchema)
 
 module.exports = notifyModel
