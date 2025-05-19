@@ -100,10 +100,10 @@ ProjectRouter.post('/upadte-project/:id', auth, async (req, res) => {
             return res.send({ success: false, message: " project  id not found" })
         }
 
-        const { progress } = req.body;
+        const { progress, status, } = req.body;
 
-        if (!progress) {
-            return res.send({ success: false, message: "progress  required" });
+        if (!progress || !status) {
+            return res.send({ success: false, message: "progress and Status required" });
         }
 
         // Find the application                       
@@ -116,7 +116,7 @@ ProjectRouter.post('/upadte-project/:id', auth, async (req, res) => {
         // Update status and remarks
         const updateResult = await ProjectModel.updateOne(
             { id: id },
-            { $set: { progress } }
+            { $set: { progress, status } }
         );
         if (updateResult.modifiedCount > 0) {
 
@@ -151,9 +151,9 @@ ProjectRouter.post('/updateproject/:id', auth, async (req, res) => {
             return res.send({ success: false, message: " project  id not found" })
         }
 
-        const { name, desc, startDate, endDate, status, departmentID, budget } = req.body;
+        const { name, desc, startDate, endDate, departmentID, budget } = req.body;
 
-        if (!name || !desc || !startDate || !endDate || !status || !departmentID || !budget) {
+        if (!name || !desc || !startDate || !endDate || !departmentID || !budget) {
             return res.send({ success: false, message: "All fields are required" });
         }
 
@@ -173,7 +173,7 @@ ProjectRouter.post('/updateproject/:id', auth, async (req, res) => {
         // Update status and remarks
         const updateResult = await ProjectModel.updateOne(
             { id: id },
-            { $set: { name, description: desc, startDate: new Date(startDate), endDate: new Date(endDate), status, departmentID: fetchDept._id, budget } }
+            { $set: { name, description: desc, startDate: new Date(startDate), endDate: new Date(endDate), departmentID: fetchDept._id, budget } }
         );
         if (updateResult.modifiedCount > 0) {
 
