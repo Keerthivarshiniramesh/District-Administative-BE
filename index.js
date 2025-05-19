@@ -11,6 +11,7 @@ const app = Express()
 
 const AuthRouter = require('./router/AuthRouter')
 const DeptRouters = require('./router/DepartmentRouter')
+const NotifyRouter = require('./router/NotificationRouter')
 
 app.use(Express.json())
 app.use(Express.urlencoded({ extended: true }))
@@ -39,6 +40,7 @@ app.use(session({
 
 app.use(AuthRouter)
 app.use(DeptRouters)
+app.use(NotifyRouter)
 
 app.listen(process.env.PORT, () => {
     console.log("Server Running in ", process.env.PORT)
